@@ -21,6 +21,14 @@ Production ready.
 |Default|-|
 |Context|location|
 
+
+|Syntax |dynamic_upstream_path|
+|-------|----------------|
+|Default| /home/work/nginx/conf/vhost/|
+|Context|location,server|
+
+Update contents of dynamic_upstream_path/upstream_name.conf, if file not exists nothing will be created
+
 Now `ngx_dynamic_upstream` supports dynamic upstream under only `http` context.
 
 # Quick Start
@@ -36,9 +44,10 @@ upstream backends {
 server {
     listen 6000;
 
+    dynamic_upstream_path "/Users/zhaoxiwu/nginx/conf/vhost/";
     location /dynamic {
-		allow 127.0.0.1;
-	    deny all;
+	allow 127.0.0.1;
+	deny all;
         dynamic_upstream;
     }
 
@@ -128,6 +137,25 @@ server 127.0.0.1:6002;
 server 127.0.0.1:6004;
 $
 ```
+
+## Updata content of conf
+```bash
+ curl "http://127.0.0.1:8080/dynamic?upstream=zone_for_backends&server=127.0.0.1:6003&down="
+server 127.0.0.1:6001 weight=1 max_fails=1 fail_timeout=10;
+server 127.0.0.1:6002 weight=1 max_fails=1 fail_timeout=10;
+server 127.0.0.1:6003 weight=1 max_fails=1 fail_timeout=10 down;
+
+
+cat conf/vhost/backends.conf
+upstream backends{
+zone zone_for_backends 1m;
+server 127.0.0.1:6001 weight=1 max_fails=1 fail_timeout=10;
+server 127.0.0.1:6002 weight=1 max_fails=1 fail_timeout=10;
+server 127.0.0.1:6003 weight=1 max_fails=1 fail_timeout=10 down;
+}
+
+```
+
 
 # License
 
