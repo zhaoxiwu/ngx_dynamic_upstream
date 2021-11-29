@@ -170,7 +170,7 @@ static void ngx_http_dump_upstream2file(ngx_http_request_t *r, ngx_str_t host, n
 
  
     //upstream xxx{ xxx }
-    len = 8 + 1 + host.len*2 + 20  + (buf->last - buf->pos) + 4;
+    len = 8 + 1 + host.len + zone_name.len + 20  + (buf->last - buf->pos) + 4;
     b = ngx_create_temp_buf(r->pool, len);
 
     b->last = ngx_snprintf(b->last, len, "upstream %V{\nzone %V %dm;\n%s}\n", &host, &zone_name, zone_size, buf->pos);
