@@ -1,0 +1,66 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+NGX_DYNAMIC_UPSTEAM_INET_SLAB_H	ngx_inet_slab.h	/^#define NGX_DYNAMIC_UPSTEAM_INET_SLAB_H$/;"	d
+NGX_DYNAMIC_UPSTEAM_OP_ADD	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_ADD /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_BACKUP	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_BACKUP /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_LIST	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_LIST /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_PARAM	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_PARAM /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_PARAM_DOWN	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_PARAM_DOWN /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_PARAM_FAIL_TIMEOUT	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_PARAM_FAIL_TIMEOUT /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_PARAM_MAX_FAILS	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_PARAM_MAX_FAILS /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_PARAM_UP	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_PARAM_UP /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_PARAM_WEIGHT	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_PARAM_WEIGHT /;"	d
+NGX_DYNAMIC_UPSTEAM_OP_REMOVE	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTEAM_OP_REMOVE /;"	d
+NGX_DYNAMIC_UPSTREAM_H	ngx_dynamic_upstream_module.h	/^#define NGX_DYNAMIC_UPSTREAM_H$/;"	d
+NGX_DYNAMIC_UPSTREAM_OP_H	ngx_dynamic_upstream_op.h	/^#define NGX_DYNAMIC_UPSTREAM_OP_H$/;"	d
+backup	ngx_dynamic_upstream_module.h	/^    ngx_int_t backup;$/;"	m	struct:ngx_dynamic_upstream_op_t
+backup	ngx_dynamic_upstream_op.h	/^    ngx_int_t backup;$/;"	m	struct:ngx_dynamic_upstream_op_t
+down	ngx_dynamic_upstream_module.h	/^    ngx_int_t down;$/;"	m	struct:ngx_dynamic_upstream_op_t
+down	ngx_dynamic_upstream_op.h	/^    ngx_int_t down;$/;"	m	struct:ngx_dynamic_upstream_op_t
+fail_timeout	ngx_dynamic_upstream_module.h	/^    ngx_int_t fail_timeout;$/;"	m	struct:ngx_dynamic_upstream_op_t
+fail_timeout	ngx_dynamic_upstream_op.h	/^    ngx_int_t fail_timeout;$/;"	m	struct:ngx_dynamic_upstream_op_t
+max_fails	ngx_dynamic_upstream_module.h	/^    ngx_int_t max_fails;$/;"	m	struct:ngx_dynamic_upstream_op_t
+max_fails	ngx_dynamic_upstream_op.h	/^    ngx_int_t max_fails;$/;"	m	struct:ngx_dynamic_upstream_op_t
+ngx_dynamic_upstream	ngx_dynamic_upstream_module.c	/^ngx_dynamic_upstream(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)$/;"	f	file:
+ngx_dynamic_upstream_build_op	ngx_dynamic_upstream_op.c	/^ngx_dynamic_upstream_build_op(ngx_http_request_t *r, ngx_dynamic_upstream_op_t *op)$/;"	f
+ngx_dynamic_upstream_commands	ngx_dynamic_upstream_module.c	/^static ngx_command_t ngx_dynamic_upstream_commands[] = {$/;"	v	file:
+ngx_dynamic_upstream_create_response_buf	ngx_dynamic_upstream_module.c	/^ngx_dynamic_upstream_create_response_buf(ngx_http_upstream_rr_peers_t *peers, ngx_buf_t *b, size_t size, ngx_int_t verbose)$/;"	f	file:
+ngx_dynamic_upstream_get_zone	ngx_dynamic_upstream_module.c	/^ngx_dynamic_upstream_get_zone(ngx_http_request_t *r, ngx_dynamic_upstream_op_t *op)$/;"	f	file:
+ngx_dynamic_upstream_handler	ngx_dynamic_upstream_module.c	/^ngx_dynamic_upstream_handler(ngx_http_request_t *r)$/;"	f	file:
+ngx_dynamic_upstream_is_shpool_range	ngx_dynamic_upstream_op.c	/^ngx_dynamic_upstream_is_shpool_range(ngx_http_request_t *r,ngx_slab_pool_t *shpool, void *p)$/;"	f	file:
+ngx_dynamic_upstream_module	ngx_dynamic_upstream_module.c	/^ngx_module_t ngx_dynamic_upstream_module = {$/;"	v
+ngx_dynamic_upstream_module_ctx	ngx_dynamic_upstream_module.c	/^static ngx_http_module_t ngx_dynamic_upstream_module_ctx = {$/;"	v	file:
+ngx_dynamic_upstream_op	ngx_dynamic_upstream_op.c	/^ngx_dynamic_upstream_op(ngx_http_request_t *r, ngx_dynamic_upstream_op_t *op,$/;"	f
+ngx_dynamic_upstream_op_add	ngx_dynamic_upstream_op.c	/^ngx_dynamic_upstream_op_add(ngx_http_request_t *r, ngx_dynamic_upstream_op_t *op,$/;"	f	file:
+ngx_dynamic_upstream_op_remove	ngx_dynamic_upstream_op.c	/^ngx_dynamic_upstream_op_remove(ngx_http_request_t *r, ngx_dynamic_upstream_op_t *op,$/;"	f	file:
+ngx_dynamic_upstream_op_t	ngx_dynamic_upstream_module.h	/^typedef struct ngx_dynamic_upstream_op_t {$/;"	s
+ngx_dynamic_upstream_op_t	ngx_dynamic_upstream_module.h	/^} ngx_dynamic_upstream_op_t;$/;"	t	typeref:struct:ngx_dynamic_upstream_op_t
+ngx_dynamic_upstream_op_t	ngx_dynamic_upstream_op.h	/^typedef struct ngx_dynamic_upstream_op_t {$/;"	s
+ngx_dynamic_upstream_op_t	ngx_dynamic_upstream_op.h	/^} ngx_dynamic_upstream_op_t;$/;"	t	typeref:struct:ngx_dynamic_upstream_op_t
+ngx_dynamic_upstream_op_update_param	ngx_dynamic_upstream_op.c	/^ngx_dynamic_upstream_op_update_param(ngx_http_request_t *r, ngx_dynamic_upstream_op_t *op,$/;"	f	file:
+ngx_dynamic_upstream_params	ngx_dynamic_upstream_op.c	/^static const ngx_str_t ngx_dynamic_upstream_params[] = {$/;"	v	file:
+ngx_inet_resolve_host_slab	ngx_inet_slab.c	/^ngx_inet_resolve_host_slab(ngx_slab_pool_t *pool, ngx_url_t *u)$/;"	f	file:
+ngx_parse_inet6_url	ngx_inet_slab.c	/^ngx_parse_inet6_url(ngx_slab_pool_t *pool, ngx_url_t *u)$/;"	f	file:
+ngx_parse_inet_url	ngx_inet_slab.c	/^ngx_parse_inet_url(ngx_slab_pool_t *pool, ngx_url_t *u)$/;"	f	file:
+ngx_parse_unix_domain_url	ngx_inet_slab.c	/^ngx_parse_unix_domain_url(ngx_slab_pool_t *pool, ngx_url_t *u)$/;"	f	file:
+ngx_parse_url_slab	ngx_inet_slab.c	/^ngx_parse_url_slab(ngx_slab_pool_t *pool, ngx_url_t *u)$/;"	f
+op	ngx_dynamic_upstream_module.h	/^    ngx_int_t op;$/;"	m	struct:ngx_dynamic_upstream_op_t
+op	ngx_dynamic_upstream_op.h	/^    ngx_int_t op;$/;"	m	struct:ngx_dynamic_upstream_op_t
+op_param	ngx_dynamic_upstream_module.h	/^    ngx_int_t op_param;$/;"	m	struct:ngx_dynamic_upstream_op_t
+op_param	ngx_dynamic_upstream_op.h	/^    ngx_int_t op_param;$/;"	m	struct:ngx_dynamic_upstream_op_t
+server	ngx_dynamic_upstream_module.h	/^    ngx_str_t server;$/;"	m	struct:ngx_dynamic_upstream_op_t
+server	ngx_dynamic_upstream_op.h	/^    ngx_str_t server;$/;"	m	struct:ngx_dynamic_upstream_op_t
+status	ngx_dynamic_upstream_module.h	/^    ngx_uint_t status;$/;"	m	struct:ngx_dynamic_upstream_op_t
+status	ngx_dynamic_upstream_op.h	/^    ngx_uint_t status;$/;"	m	struct:ngx_dynamic_upstream_op_t
+up	ngx_dynamic_upstream_module.h	/^    ngx_int_t up;$/;"	m	struct:ngx_dynamic_upstream_op_t
+up	ngx_dynamic_upstream_op.h	/^    ngx_int_t up;$/;"	m	struct:ngx_dynamic_upstream_op_t
+upstream	ngx_dynamic_upstream_module.h	/^    ngx_str_t upstream;$/;"	m	struct:ngx_dynamic_upstream_op_t
+upstream	ngx_dynamic_upstream_op.h	/^    ngx_str_t upstream;$/;"	m	struct:ngx_dynamic_upstream_op_t
+verbose	ngx_dynamic_upstream_module.h	/^    ngx_int_t verbose;$/;"	m	struct:ngx_dynamic_upstream_op_t
+verbose	ngx_dynamic_upstream_op.h	/^    ngx_int_t verbose;$/;"	m	struct:ngx_dynamic_upstream_op_t
+weight	ngx_dynamic_upstream_module.h	/^    ngx_int_t weight;$/;"	m	struct:ngx_dynamic_upstream_op_t
+weight	ngx_dynamic_upstream_op.h	/^    ngx_int_t weight;$/;"	m	struct:ngx_dynamic_upstream_op_t
