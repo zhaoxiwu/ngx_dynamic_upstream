@@ -175,7 +175,7 @@ static void ngx_http_dump_upstream2file(ngx_http_request_t *r, ngx_str_t host, n
     
     
     b = ngx_create_temp_buf(r->pool, len);
-    b->last = ngx_sprintf(b->last, "upstream %V{\nzone %V %dm;\n%s\n}\n", &host, &zone_name, zone_size, tmp_buf);
+    b->last = ngx_sprintf(b->last, "upstream %V{\nzone %V %dm;\n%s}\n", &host, &zone_name, zone_size, tmp_buf);
     (void) ngx_write_file(&file, b->pos, ngx_buf_size(b), 0);
 
 done:
@@ -320,7 +320,7 @@ ngx_dynamic_upstream_handler(ngx_http_request_t *r)
     out.buf = b;
     out.next = NULL;
 
-    rc = ngx_dynamic_upstream_create_response_buf((ngx_http_upstream_rr_peers_t *)uscf->peer.data, b, size, 1);
+    rc = ngx_dynamic_upstream_create_response_buf((ngx_http_upstream_rr_peers_t *)uscf->peer.data, b, size, op.verbose);
 
     if (rc == NGX_ERROR) {
         ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
@@ -338,7 +338,9 @@ ngx_dynamic_upstream_handler(ngx_http_request_t *r)
     b->last_buf = (r == r->main) ? 1 : 0;
     b->last_in_chain = 1;
 
-    ngx_http_dump_upstream2file(r, uscf->host, uscf->shm_zone->shm.name, size/1024/1024, b);
+    if (op.verbose == 1){
+	    ngx_http_dump_upstream2file(r, uscf->host, uscf->shm_zone->shm.name, size/1024/1024, b);
+    }
     rc = ngx_http_send_header(r);
 
     if (rc == NGX_ERROR || rc > NGX_OK || r->header_only) {

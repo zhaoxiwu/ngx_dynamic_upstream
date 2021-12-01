@@ -93,12 +93,15 @@ ngx_dynamic_upstream_build_op(ngx_http_request_t *r, ngx_dynamic_upstream_op_t *
 
             } else if (ngx_strcmp("arg_add", args[i].data) == 0) {
                 op->op |= NGX_DYNAMIC_UPSTEAM_OP_ADD;
+                op->verbose = 1;
 
             } else if (ngx_strcmp("arg_remove", args[i].data) == 0) {
                 op->op |= NGX_DYNAMIC_UPSTEAM_OP_REMOVE;
+                op->verbose = 1;
 
             } else if (ngx_strcmp("arg_backup", args[i].data) == 0) {
                 op->backup = 1;
+                op->verbose = 1;
 
             } else if (ngx_strcmp("arg_server", args[i].data) == 0) {
                 op->server.data = var->data;
