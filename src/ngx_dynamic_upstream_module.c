@@ -103,64 +103,56 @@ ngx_dynamic_upstream_merge_conf(ngx_conf_t *cf, void *parent, void *child)
 
 static void ngx_http_dump_upstream2file(ngx_http_request_t *r, ngx_str_t host, ngx_str_t zone_name, size_t zone_size, ngx_buf_t *buf){
     ngx_err_t                      err;
-    ngx_file_t                     file;
-    ngx_file_info_t                fi;
-    ngx_buf_t                      *b;
+    ngx_buf_t                       *b;
     size_t                          len;
-    ngx_str_t           ext_name;
-    ngx_str_t           old_name;
+    u_char	   *ext_name, *old_name, *last;
+    ngx_fd_t    fd;
 
     ngx_dynamic_upstream_conf_t  *locf;
     locf = ngx_http_get_module_loc_conf(r, ngx_dynamic_upstream_module);
     len  = locf->upstream_path.len + host.len;
    
     
-    old_name.len = len+5;
-    old_name.data = ngx_calloc(old_name.len, r->connection->log);
-    ngx_sprintf(old_name.data, "%s%s.conf", locf->upstream_path.data, host.data);
-    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "old_name  \"%s\" ",old_name.data);
+    old_name = ngx_calloc(len+5, r->connection->log);
+    last = old_name;
+    last = ngx_sprintf(last, "%s", locf->upstream_path.data);
+    last = ngx_sprintf(last, "%s", host.data);
+    *last++ = '.';
+    *last++ = 'c';
+    *last++ = 'o';
+    *last++ = 'n';
+    *last++ = 'f';
+    *last++ = '\0';
+    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "old_name  \"%s\" ",old_name);
 
-    ext_name.len = len+4;
-    ext_name.data = ngx_calloc(ext_name.len, r->connection->log);
-    ngx_sprintf(ext_name.data, "%s%s.bak", locf->upstream_path.data, host.data);
-    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "ext_name  \"%s\" ",ext_name.data);
+    ext_name = ngx_calloc(len+5+4, r->connection->log);
+    last = ext_name;
+    last = ngx_sprintf(last, "%s", old_name);
+    *last++ = '.';
+    *last++ = 'b';
+    *last++ = 'a';
+    *last++ = 'k';
+    *last++ = '\0';
+    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "ext_name  \"%s\" ",ext_name);
 
     //backup old upstream.conf file to upstream_conf.bak
-    if (ngx_rename_file(old_name.data, ext_name.data) != NGX_OK) {
+    if (ngx_rename_file(old_name, ext_name) != NGX_OK) {
 	ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "rename file  \"%s to %s\" failed",
-                       old_name.data, ext_name.data);
-	goto done;
+    			old_name, ext_name);
+    	goto done;
     }
 
-
-    ngx_memzero(&file, sizeof(ngx_file_t));
-    file.log = r->connection->log;
-    file.name = old_name;
-    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "file.name  \"%s\" ",file.name.data);
-    file.fd = ngx_open_file(file.name.data, NGX_FILE_RDWR, NGX_FILE_CREATE_OR_OPEN, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-    if (file.fd == NGX_INVALID_FILE) {
+    //ngx_calloc(&file, sizeof(ngx_file_t));
+    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "file.name  \"%s\" ",old_name);
+    fd = ngx_open_file(old_name, NGX_FILE_RDWR, NGX_FILE_CREATE_OR_OPEN, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+    if (fd == NGX_INVALID_FILE) {
         err = ngx_errno;
-
-        /* cache file may have been deleted */
-
         if (err == NGX_ENOENT) {
-            ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
-                           "upstream file  \"%s\" not found",
-                           file.name.data);
-        goto done;
+            ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,  "upstream file  \"%s\" not found", old_name);
+	    goto done;
         }
 
-        ngx_log_error(NGX_LOG_CRIT, r->connection->log, err,
-                      ngx_open_file_n " \"%s\" failed", file.name.data);
-        goto done;
-    }
-    /*
-     * make sure cache file wasn't replaced;
-     * if it was, do nothing
-     */
-    if (ngx_fd_info(file.fd, &fi) == NGX_FILE_ERROR) {
-        ngx_log_error(NGX_LOG_CRIT, r->connection->log, ngx_errno,
-                      ngx_fd_info_n " \"%s\" failed", file.name.data);
+        ngx_log_error(NGX_LOG_CRIT, r->connection->log, err, ngx_open_file_n " \"%s\" failed", old_name);
         goto done;
     }
 
@@ -168,7 +160,7 @@ static void ngx_http_dump_upstream2file(ngx_http_request_t *r, ngx_str_t host, n
     size_t buf_size = (size_t)ngx_buf_size(buf);
     //upstream xxx{ zone yyyy zm; xxx }
     len = 8 + 1 + host.len + zone_name.len + 20  + buf_size + 4;
-    u_char *tmp_buf = ngx_calloc(buf_size, file.log);
+    u_char *tmp_buf = ngx_calloc(buf_size, r->connection->log);
     ngx_copy(tmp_buf, buf->pos, buf_size);
     *(tmp_buf + buf_size)  = '\0';
     ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "tmp_buf  \"%s, %d\" ",tmp_buf, ngx_buf_size(buf));
@@ -176,14 +168,18 @@ static void ngx_http_dump_upstream2file(ngx_http_request_t *r, ngx_str_t host, n
     
     b = ngx_create_temp_buf(r->pool, len);
     b->last = ngx_sprintf(b->last, "upstream %V{\nzone %V %dm;\n%s}\n", &host, &zone_name, zone_size, tmp_buf);
-    (void) ngx_write_file(&file, b->pos, ngx_buf_size(b), 0);
+    (void) ngx_write_fd(fd, b->pos, ngx_buf_size(b));
 
 done:
-
-    if (ngx_close_file(file.fd) == NGX_FILE_ERROR) {
+    /*
+    if (ngx_fd_info(file.fd, &fi) !=  NGX_FILE_ERROR && ngx_close_file(file.fd) == NGX_FILE_ERROR) {
         ngx_log_error(NGX_LOG_ALERT, r->connection->log, ngx_errno,
                       ngx_close_file_n " \"%s\" failed", file.name.data);
     }
+    */
+    ngx_close_file(fd);
+    fd = NGX_INVALID_FILE;
+
 }
 
 
